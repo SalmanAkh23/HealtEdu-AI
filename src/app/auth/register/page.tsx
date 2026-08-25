@@ -1,0 +1,209 @@
+'use client'
+
+import { useState, FormEvent } from 'react'
+import Link from 'next/link'
+import { useRouter } from 'next/navigation'
+import { createClient } from '@/lib/supabase/client'
+import { Heart, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+
+export default function RegisterPage() {
+  const router = useRouter()
+  const [fullName, setFullName] = useState('')
+  const [email, setEmail] = useState('')
+  const [password, setPassword] = useState('')
+  const [showPassword, setShowPassword] = useState(false)
+  const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+
+  const handleRegister = async (e: FormEvent) => {
+    e.preventDefault()
+    setLoading(true)
+    setError(null)
+
+    const supabase = createClient()
+    const { error: authError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          full_name: fullName,
+        },
+        emailRedirectTo: `${location.origin}/auth/callback`,
+      }
+    })
+
+    if (authError) {
+      setError(authError.message)
+      setLoading(false)
+    } else {
+      router.push('/dashboard')
+    }
+  }
+
+  return (
+    <div
+      style={{
+        minHeight: '100dvh',
+        background: 'linear-gradient(135deg, hsl(168,72%,8%) 0%, hsl(200,70%,12%) 50%, hsl(220,60%,10%) 100%)',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        padding: '2rem 1rem',
+        position: 'relative',
+        overflow: 'hidden',
+      }}
+    >
+      {/* Background blobs */}
+      <div style={{ position: 'absolute', top: '20%', left: '10%', width: 300, height: 300, borderRadius: '50%', background: 'radial-gradient(circle, hsla(168,72%,40%,0.12), transparent 70%)', pointerEvents: 'none' }} />
+      <div style={{ position: 'absolute', bottom: '20%', right: '10%', width: 400, height: 400, borderRadius: '50%', background: 'radial-gradient(circle, hsla(198,95%,58%,0.08), transparent 70%)', pointerEvents: 'none' }} />
+
+      <div style={{ width: '100%', maxWidth: 420, position: 'relative', zIndex: 1 }}>
+        {/* Logo */}
+        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
+          <div
+            style={{
+              width: 56,
+              height: 56,
+              borderRadius: '16px',
+              background: 'linear-gradient(135deg, var(--brand-500), var(--accent-400))',
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              margin: '0 auto 1rem',
+              boxShadow: '0 12px 40px hsla(168,72%,40%,0.4)',
+            }}
+          >
+            <Heart size={28} color="white" fill="white" />
+          </div>
+          <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>
+            Create an account
+          </h1>
+          <p style={{ color: 'hsla(0,0%,100%,0.6)', fontSize: '0.9375rem' }}>
+            Join HealthEdu AI today
+          </p>
+        </div>
+
+        {/* Form Card */}
+        <div
+          style={{
+            background: 'hsla(220,28%,11%,0.85)',
+            backdropFilter: 'blur(20px)',
+            border: '1px solid hsla(220,20%,25%,0.8)',
+            borderRadius: '20px',
+            padding: '2rem',
+            boxShadow: '0 20px 60px hsla(0,0%,0%,0.4)',
+          }}
+        >
+          {error && (
+            <div
+              style={{
+                background: 'hsla(0,65%,42%,0.15)',
+                border: '1px solid hsla(0,65%,42%,0.3)',
+                borderRadius: '10px',
+                padding: '0.75rem 1rem',
+                marginBottom: '1.25rem',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '0.5rem',
+                color: 'hsl(0,80%,70%)',
+                fontSize: '0.875rem',
+              }}
+            >
+              <AlertCircle size={18} />
+              <span>{error}</span>
+            </div>
+          )}
+
+          <form onSubmit={handleRegister} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'hsla(0,0%,100%,0.9)', marginBottom: '0.5rem' }}>
+                Full Name
+              </label>
+              <input
+                type="text"
+                required
+                className="form-input"
+                placeholder="John Doe"
+                value={fullName}
+                onChange={(e) => setFullName(e.target.value)}
+                style={{ background: 'hsla(220,20%,15%,0.5)', borderColor: 'hsla(220,20%,30%,0.5)', color: 'white' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'hsla(0,0%,100%,0.9)', marginBottom: '0.5rem' }}>
+                Email Address
+              </label>
+              <input
+                type="email"
+                required
+                className="form-input"
+                placeholder="you@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                style={{ background: 'hsla(220,20%,15%,0.5)', borderColor: 'hsla(220,20%,30%,0.5)', color: 'white' }}
+              />
+            </div>
+            <div>
+              <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: 600, color: 'hsla(0,0%,100%,0.9)', marginBottom: '0.5rem' }}>
+                Password
+              </label>
+              <div style={{ position: 'relative' }}>
+                <input
+                  type={showPassword ? 'text' : 'password'}
+                  required
+                  className="form-input"
+                  placeholder="••••••••"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  style={{ background: 'hsla(220,20%,15%,0.5)', borderColor: 'hsla(220,20%,30%,0.5)', color: 'white', paddingRight: '2.5rem' }}
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowPassword(!showPassword)}
+                  style={{
+                    position: 'absolute',
+                    right: '0.75rem',
+                    top: '50%',
+                    transform: 'translateY(-50%)',
+                    background: 'none',
+                    border: 'none',
+                    color: 'hsla(0,0%,100%,0.4)',
+                    cursor: 'pointer',
+                    padding: 0,
+                  }}
+                >
+                  {showPassword ? <EyeOff size={18} /> : <Eye size={18} />}
+                </button>
+              </div>
+              <p style={{ fontSize: '0.75rem', color: 'hsla(0,0%,100%,0.5)', marginTop: '0.5rem' }}>
+                Must be at least 6 characters long
+              </p>
+            </div>
+
+            <button
+              type="submit"
+              className="btn btn-primary"
+              disabled={loading}
+              style={{
+                width: '100%',
+                padding: '0.875rem',
+                fontSize: '1rem',
+                marginTop: '0.5rem',
+                opacity: loading ? 0.7 : 1,
+              }}
+            >
+              {loading ? <Loader2 size={20} className="animate-spin" /> : 'Create Account'}
+            </button>
+          </form>
+
+          <div style={{ marginTop: '1.5rem', textAlign: 'center', fontSize: '0.875rem', color: 'hsla(0,0%,100%,0.6)' }}>
+            Already have an account?{' '}
+            <Link href="/auth/login" style={{ color: 'var(--brand-400)', fontWeight: 600, textDecoration: 'none' }}>
+              Sign in
+            </Link>
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}

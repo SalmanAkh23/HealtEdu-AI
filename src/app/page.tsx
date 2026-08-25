@@ -1,69 +1,882 @@
-import Image from "next/image";
+import Link from 'next/link'
+import {
+  Heart,
+  Activity,
+  Sparkles,
+  BookOpen,
+  Languages,
+  FileText,
+  HelpCircle,
+  CalendarCheck,
+  Trophy,
+  Lightbulb,
+  Map,
+  Bot,
+  Send,
+  CheckCircle2,
+  Circle,
+  Flame,
+  Award,
+  Apple,
+} from 'lucide-react'
+import { ForceLightTheme } from '@/components/providers/ForceLightTheme'
 
-export default function Home() {
+const brand = '#2FA394'
+const cyan = '#45BCDF'
+
+function Eyebrow({ children }: { children: React.ReactNode }) {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert h-5 w-[100px]"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the{" "}
-            <code className="rounded bg-black/[.06] px-1.5 py-0.5 font-mono text-[0.9em] dark:bg-white/[.08]">
-              page.tsx
-            </code>{" "}
-            file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert h-[14px] w-4"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={14}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
-      </main>
-    </div>
-  );
+    <p
+      style={{
+        fontSize: '0.75rem',
+        fontWeight: 700,
+        letterSpacing: '0.12em',
+        textTransform: 'uppercase',
+        color: brand,
+        marginBottom: '0.75rem',
+      }}
+    >
+      {children}
+    </p>
+  )
 }
+
+function SectionHeading({
+  eyebrow,
+  title,
+  subtitle,
+}: {
+  eyebrow?: string
+  title: React.ReactNode
+  subtitle?: string
+}) {
+  return (
+    <div style={{ marginBottom: '3rem', maxWidth: 640 }}>
+      {eyebrow ? <Eyebrow>{eyebrow}</Eyebrow> : null}
+      <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 800, lineHeight: 1.15 }}>
+        {title}
+      </h2>
+      {subtitle ? (
+        <p style={{ color: 'var(--text-secondary)', marginTop: '1rem', fontSize: '1.0625rem' }}>
+          {subtitle}
+        </p>
+      ) : null}
+    </div>
+  )
+}
+
+const features = [
+  {
+    icon: Bot,
+    title: 'AI Health Assistant',
+    text: 'Ask any health question and get simple explanations with scientific references — never a diagnosis.',
+    tint: 'rgba(46,139,139,0.1)',
+    color: brand,
+  },
+  {
+    icon: Languages,
+    title: 'Medical Term Translator',
+    text: '"Essential hypertension", "high blood pressure". Complex jargon, translated instantly.',
+    tint: 'rgba(69,188,223,0.14)',
+    color: cyan,
+  },
+  {
+    icon: FileText,
+    title: 'AI Article Summary',
+    text: 'Every article has a TL;DR: a 30-second summary, a 3-minute brief, or key takeaways.',
+    tint: 'rgba(46,139,139,0.1)',
+    color: brand,
+  },
+  {
+    icon: HelpCircle,
+    title: 'Interactive Quizzes',
+    text: 'Multiple-choice questions scoring and explanations after every learning module.',
+    tint: 'rgba(34,197,94,0.12)',
+    color: '#16A34A',
+  },
+  {
+    icon: CalendarCheck,
+    title: 'Daily Habit Tracker',
+    text: 'Water, sleep, movement, nutrition. Small habits tracked off day at a time.',
+    tint: 'rgba(245,158,11,0.14)',
+    color: '#D97706',
+  },
+  {
+    icon: Trophy,
+    title: 'Gamification',
+    text: 'Earn XP, badges, levels, and weekly streaks that keep your learning streak alive.',
+    tint: 'rgba(239,68,68,0.1)',
+    color: '#DC2626',
+  },
+  {
+    icon: Lightbulb,
+    title: 'Personal Recommendations',
+    text: 'Articles, modules and habits suggested based on your interests and learning history.',
+    tint: 'rgba(46,139,139,0.1)',
+    color: brand,
+  },
+  {
+    icon: Map,
+    title: 'Learning Roadmap',
+    text: 'A weekly plan generated by AI, adapted to your pace across nutrition, exercise, sleep and more.',
+    tint: 'rgba(69,188,223,0.14)',
+    color: cyan,
+  },
+]
+
+const topics = [
+  { name: 'Nutrition', meta: '12 modules · quiz included' },
+  { name: 'Exercise', meta: '8 modules · quiz included' },
+  { name: 'Sleep', meta: '6 modules · quiz included' },
+  { name: 'Mental Health', meta: '10 modules · quiz included' },
+  { name: "Women's & Men's Health", meta: '9 modules · quiz included' },
+  { name: 'Child & Elderly Health', meta: '7 modules · quiz included' },
+  { name: 'Disease Prevention', meta: '8 modules · quiz included' },
+  { name: 'First Aid', meta: '4 modules · quiz included' },
+]
+
+const habits = [
+  { label: 'Drink 8 glasses of water', done: true },
+  { label: '30 minutes of movement', done: true },
+  { label: 'Sleep before 10 PM', done: false },
+  { label: 'Eat fruits', done: true },
+  { label: 'Reduce sugar intake', done: false },
+]
+
+const testimonials = [
+  {
+    quote:
+      '"I used to get all my health tips from TikTok. Now I actually understand what a medical term means — and I know where the information comes from."',
+    name: 'Sarah',
+    role: 'College student, 18',
+    initial: 'S',
+  },
+  {
+    quote:
+      '"Ten minutes a day between meetings. The habit tracker keeps me on plan finally made healthy living feel doable."',
+    name: 'Andi',
+    role: 'Office worker, 31',
+    initial: 'A',
+  },
+  {
+    quote:
+      '"The medical term translator is brilliant for explaining checks up results to my parents in plain language."',
+    name: 'Maya',
+    role: 'Nursing student, 22',
+    initial: 'M',
+  },
+]
+
+export default function LandingPage() {
+  return (
+    <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: '#F8FCFC' }}>
+      <ForceLightTheme />
+
+      {/* ===================== NAVBAR ===================== */}
+      <header
+        className="glass"
+        style={{
+          position: 'sticky',
+          top: 0,
+          zIndex: 50,
+          borderBottom: '1px solid var(--border-subtle)',
+        }}
+      >
+        <div
+          className="container"
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'space-between',
+            height: 72,
+          }}
+        >
+          <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', textDecoration: 'none' }}>
+            <div
+              style={{
+                width: 36,
+                height: 36,
+                borderRadius: '11px',
+                background: brand,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                boxShadow: `0 6px 16px rgba(46,139,139,0.3)`,
+              }}
+            >
+              <Heart size={18} color="white" fill="white" />
+            </div>
+            <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.125rem', color: 'var(--text-primary)' }}>
+              HealthEdu<span style={{ color: brand }}> AI</span>
+            </span>
+          </Link>
+
+          <nav
+            className="landing-nav-links"
+            style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
+          >
+            {[
+              { href: '#features', label: 'Features' },
+              { href: '#learning', label: 'Learning' },
+              { href: '#assistant', label: 'AI Assistant' },
+              { href: '#habits', label: 'Habits' },
+            ].map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                style={{
+                  textDecoration: 'none',
+                  color: 'var(--text-secondary)',
+                  fontSize: '0.9rem',
+                  fontWeight: 500,
+                  padding: '0.5rem 0.875rem',
+                  borderRadius: 10,
+                }}
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          <div style={{ display: 'flex', gap: '0.75rem', alignItems: 'center' }}>
+            <Link href="/auth/login" className="btn btn-ghost btn-sm">
+              Log in
+            </Link>
+            <Link href="/auth/register" className="btn btn-sm" style={{ background: brand, color: 'white', borderRadius: 999 }}>
+              Start learning
+            </Link>
+          </div>
+        </div>
+      </header>
+
+      <main style={{ flex: 1 }}>
+        {/* ===================== HERO ===================== */}
+        <section
+          style={{
+            padding: '5rem 0 4rem',
+            background:
+              'linear-gradient(180deg, #E0F4F1 0%, #ECF8F6 45%, #F8FCFC 100%)',
+            position: 'relative',
+            overflow: 'hidden',
+          }}
+        >
+          <div
+            className="container"
+            style={{
+              display: 'grid',
+              gridTemplateColumns: 'minmax(0, 1.05fr) minmax(0, 0.95fr)',
+              gap: '4rem',
+              alignItems: 'center',
+              position: 'relative',
+              zIndex: 1,
+            }}
+            id="hero-grid"
+          >
+            {/* Left */}
+            <div>
+              <div
+                style={{
+                  display: 'inline-flex',
+                  alignItems: 'center',
+                  gap: '0.5rem',
+                  background: 'white',
+                  border: '1px solid rgba(46,139,139,0.25)',
+                  color: brand,
+                  padding: '0.4rem 0.9rem',
+                  borderRadius: 999,
+                  fontSize: '0.8125rem',
+                  fontWeight: 600,
+                  boxShadow: 'var(--shadow-sm)',
+                  marginBottom: '1.75rem',
+                }}
+              >
+                <Sparkles size={15} />
+                AI-powered health education
+              </div>
+
+              <h1
+                style={{
+                  fontSize: 'clamp(2.5rem, 5vw, 3.75rem)',
+                  fontWeight: 800,
+                  lineHeight: 1.08,
+                  letterSpacing: '-0.03em',
+                  marginBottom: '1.5rem',
+                }}
+              >
+                Understand health,{' '}
+                <span style={{ color: cyan }}>not just read about it.</span>
+              </h1>
+
+              <p
+                style={{
+                  fontSize: '1.0625rem',
+                  color: 'var(--text-secondary)',
+                  lineHeight: 1.65,
+                  maxWidth: 480,
+                  marginBottom: '2rem',
+                }}
+              >
+                HealthEdu AI simplifies medical language, explains trusted articles in seconds, and keeps you learning with quizzes, habits and streaks — so misinformation never gets the last word.
+              </p>
+
+              <div style={{ display: 'flex', gap: '0.875rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
+                <Link
+                  href="/auth/register"
+                  style={{
+                    display: 'inline-flex',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    background: brand,
+                    color: 'white',
+                    fontWeight: 600,
+                    fontSize: '0.95rem',
+                    textDecoration: 'none',
+                    padding: '0.85rem 1.75rem',
+                    borderRadius: 999,
+                    boxShadow: '0 10px 26px rgba(46,139,139,0.35)',
+                  }}
+                >
+                  Start learning free
+                </Link>
+                <Link
+                  href="/ai-assistant"
+                  className="btn"
+                  style={{
+                    background: 'white',
+                    border: '1px solid var(--border-subtle)',
+                    color: 'var(--text-primary)',
+                    borderRadius: 999,
+                  }}
+                >
+                  Ask the AI assistant
+                </Link>
+              </div>
+
+              {/* Stats */}
+              <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
+                {[
+                  { value: '500+', label: 'Evidence-based articles' },
+                  { value: '100%', label: 'Education, never diagnosis' },
+                  { value: '10 min', label: 'Daily learning stress' },
+                ].map((s) => (
+                  <div key={s.label}>
+                    <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
+                    <div style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>{s.label}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Right — illustration */}
+            <div style={{ position: 'relative' }}>
+              <div
+                style={{
+                  background: 'white',
+                  borderRadius: 28,
+                  padding: '1.5rem',
+                  boxShadow: '0 30px 80px rgba(46,139,139,0.18)',
+                  border: '1px solid rgba(46,139,139,0.1)',
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(2, 1fr)',
+                  gap: '1rem',
+                }}
+              >
+                <div
+                  style={{
+                    gridColumn: '1 / -1',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    gap: '0.5rem',
+                    padding: '1.25rem',
+                    borderRadius: 20,
+                    background: 'linear-gradient(135deg, #F0FAFA, #E6F6F4)',
+                  }}
+                >
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', color: brand, fontWeight: 700, fontSize: '0.875rem' }}>
+                    <Heart size={16} fill={brand} color={brand} /> Heart rate
+                  </div>
+                  <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--text-primary)' }}>
+                    72 <span style={{ fontSize: '0.875rem', fontWeight: 600, color: 'var(--text-muted)' }}>bpm</span>
+                  </div>
+                  <svg width="140" height="32" viewBox="0 0 140 32" fill="none">
+                    <path d="M0 20 L20 20 L28 8 L36 26 L44 14 L58 14 L66 22 L82 22 L90 10 L98 24 L112 24 L120 16 L140 16" stroke="#2CC5B2" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                  </svg>
+                </div>
+
+                <div style={{ padding: '1rem 1.25rem', borderRadius: 18, background: '#F0FAFA', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{ width: 38, height: 38, borderRadius: 12, background: '#DCF2EE', display: 'flex', alignItems: 'center', justifyContent: 'center', color: cyan }}>
+                    <Activity size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Hydration</div>
+                    <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>6 / 8 glasses</div>
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem 1.25rem', borderRadius: 18, background: '#F0FAFA', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                  <div style={{ width: 38, height: 38, borderRadius: 12, background: '#E4F6EA', display: 'flex', alignItems: 'center', justifyContent: 'center', color: '#16A34A' }}>
+                    <Apple size={18} />
+                  </div>
+                  <div>
+                    <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>Nutrition</div>
+                    <div style={{ fontWeight: 700, color: 'var(--text-primary)' }}>Eat the rainbow</div>
+                  </div>
+                </div>
+
+                <div
+                  style={{
+                    gridColumn: '1 / -1',
+                    padding: '1rem 1.25rem',
+                    borderRadius: 18,
+                    background: 'linear-gradient(135deg, #2E9B9B, #37B5A5)',
+                    color: 'white',
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                  }}
+                >
+                  <Bot size={22} />
+                  <div>
+                    <div style={{ fontWeight: 700 }}>HealthEdu Assistant</div>
+                    <div style={{ fontSize: '0.8125rem', opacity: 0.85 }}>Always here to explain, never to diagnose.</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== FEATURES ===================== */}
+        <section id="features" style={{ padding: '6rem 0' }}>
+          <div className="container">
+            <SectionHeading
+              eyebrow="Core features"
+              title={
+                <>
+                  Everything you need to actually learn health
+                </>
+              }
+              subtitle="Built around education, not diagnosis — combining AI, visual learning and gamification."
+            />
+            <div className="grid-4">
+              {features.map((f) => (
+                <div
+                  key={f.title}
+                  className="card card-interactive"
+                  style={{ padding: '1.75rem', borderRadius: 20 }}
+                >
+                  <div
+                    style={{
+                      width: 44,
+                      height: 44,
+                      borderRadius: 13,
+                      background: f.tint,
+                      color: f.color,
+                      display: 'flex',
+                      alignItems: 'center',
+                      justifyContent: 'center',
+                      marginBottom: '1.25rem',
+                    }}
+                  >
+                    <f.icon size={21} />
+                  </div>
+                  <h3 style={{ fontSize: '1.0625rem', fontWeight: 700, marginBottom: '0.5rem' }}>{f.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', lineHeight: 1.6 }}>{f.text}</p>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== AI ASSISTANT ===================== */}
+        <section id="assistant" style={{ padding: '6rem 0', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+          <div
+            className="container"
+            style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1.1fr)', gap: '4rem', alignItems: 'center' }}
+            id="assistant-grid"
+          >
+            <div>
+              <SectionHeading
+                eyebrow="AI assistant"
+                title={
+                  <>
+                    Your patient, always-available health tutor
+                  </>
+                }
+                subtitle="Ask anything about healthy living. HealthEdu AI answers in plain language, links to scientific references and suggests what to learn next. It will never diagnose diseases or prescribe medication."
+              />
+              <ul style={{ listStyle: 'none', display: 'grid', gap: '0.75rem' }}>
+                {['Simplify', 'Translate terms', 'Summarize', 'Recommend articles'].map((item) => (
+                  <li key={item} style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', color: 'var(--text-secondary)', fontWeight: 500 }}>
+                    <CheckCircle2 size={18} color={brand} />
+                    {item}
+                  </li>
+                ))}
+              </ul>
+            </div>
+
+            {/* Chat mockup */}
+            <div
+              style={{
+                background: '#F0FAFA',
+                border: '1px solid rgba(46,139,139,0.12)',
+                borderRadius: 24,
+                padding: '1.25rem',
+                boxShadow: 'var(--shadow-lg)',
+              }}
+            >
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1rem' }}>
+                <div style={{ width: 34, height: 34, borderRadius: 11, background: brand, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Bot size={17} color="white" />
+                </div>
+                <strong style={{ fontSize: '0.9rem' }}>HealthEdu Assistant</strong>
+              </div>
+
+              <div style={{ display: 'flex', justifyContent: 'flex-end', marginBottom: '0.75rem' }}>
+                <div style={{ background: brand, color: 'white', padding: '0.6rem 1rem', borderRadius: '16px 16px 4px 16px', fontSize: '0.875rem', maxWidth: 260 }}>
+                  What is hypertension?
+                </div>
+              </div>
+
+              <div style={{ marginBottom: '1rem' }}>
+                <div style={{ background: 'white', padding: '0.85rem 1rem', borderRadius: '16px 16px 16px 4px', fontSize: '0.875rem', color: 'var(--text-primary)', lineHeight: 1.6, maxWidth: 380, boxShadow: 'var(--shadow-sm)' }}>
+                  Hypertension simply means high blood pressure — your heart is pushing blood against artery walls too strongly over a long time.
+                </div>
+                <div style={{ marginTop: '0.5rem', fontSize: '0.75rem', color: 'var(--text-muted)', display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
+                  <BookOpen size={12} /> Reference: WHO — Hypertension fact sheet
+                </div>
+              </div>
+
+              {[{ q: 'What is hypertension?', active: true }, { q: 'What is hypertension?', active: false }, { q: 'How much water should I drink?', active: false }].map((s, i) => (
+                <div
+                  key={i}
+                  style={{
+                    display: 'inline-block',
+                    marginRight: '0.5rem',
+                    marginBottom: '0.5rem',
+                    padding: '0.45rem 0.9rem',
+                    borderRadius: 999,
+                    fontSize: '0.78rem',
+                    fontWeight: 500,
+                    background: s.active ? brand : 'white',
+                    color: s.active ? 'white' : 'var(--text-secondary)',
+                    border: s.active ? 'none' : '1px solid var(--border-subtle)',
+                    cursor: 'pointer',
+                  }}
+                >
+                  {s.q}
+                </div>
+              ))}
+
+              <div
+                style={{
+                  marginTop: '0.75rem',
+                  background: 'white',
+                  border: '1px solid var(--border-subtle)',
+                  borderRadius: 999,
+                  padding: '0.55rem 0.75rem 0.55rem 1.1rem',
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                  color: 'var(--text-muted)',
+                  fontSize: '0.85rem',
+                }}
+              >
+                Ask a health question...
+                <div style={{ width: 32, height: 32, borderRadius: 999, background: brand, color: 'white', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Send size={14} />
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== LEARNING PATHS ===================== */}
+        <section id="learning" style={{ padding: '6rem 0' }}>
+          <div className="container">
+            <SectionHeading
+              eyebrow="Learning paths"
+              title={
+                <>
+                  Pick a topic, follow the plan
+                </>
+              }
+              subtitle="Ten categories of bite-sized modules, each ending with a quiz and XP."
+            />
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(2, minmax(0, 1.1fr)) minmax(280px, 0.9fr)', gap: '2.5rem' }} id="learning-grid">
+              <div className="grid-2" style={{ gap: '0.875rem' }}>
+                {topics.slice(0, 4).map((t) => (
+                  <TopicTile key={t.name} {...t} />
+                ))}
+              </div>
+              <div className="grid-2" style={{ gap: '0.875rem' }}>
+                {topics.slice(4).map((t) => (
+                  <TopicTile key={t.name} {...t} />
+                ))}
+              </div>
+
+              {/* Roadmap card */}
+              <div
+                style={{
+                  background: 'linear-gradient(160deg, #DFF3F0, #EDF8F6)',
+                  border: '1px solid rgba(46,139,139,0.15)',
+                  borderRadius: 22,
+                  padding: '1.5rem',
+                }}
+              >
+                <h3 style={{ fontSize: '1.0625rem', fontWeight: 700, marginBottom: '0.35rem' }}>Your roadmap</h3>
+                <p style={{ fontSize: '0.8125rem', color: 'var(--text-secondary)', marginBottom: '1.25rem' }}>
+                  A personalized weekly plan, adapted to what you finish.
+                </p>
+                {[
+                  { w: 'Week 1', t: 'Hypertension · Healthy Sleep' },
+                  { w: 'Week 2', t: 'Exercise · Nutrition' },
+                  { w: 'Week 3', t: 'Mental Health' },
+                ].map((r, i) => (
+                  <div
+                    key={r.w}
+                    style={{
+                      background: 'white',
+                      borderRadius: 14,
+                      padding: '0.85rem 1rem',
+                      marginBottom: i === 2 ? 0 : '0.75rem',
+                      display: 'flex',
+                      alignItems: 'center',
+                      gap: '0.75rem',
+                      boxShadow: 'var(--shadow-sm)',
+                    }}
+                  >
+                    <div style={{ width: 30, height: 30, borderRadius: 999, background: 'rgba(46,139,139,0.12)', color: brand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700, fontSize: '0.8rem', flexShrink: 0 }}>
+                      {i + 1}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.875rem' }}>{r.w}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{r.t}</div>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== HABITS ===================== */}
+        <section id="habits" style={{ padding: '6rem 0', background: 'var(--bg-surface)', borderTop: '1px solid var(--border-subtle)', borderBottom: '1px solid var(--border-subtle)' }}>
+          <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '4.5rem', alignItems: 'center' }} id="habits-grid" className="container">
+            {/* Habits mockup */}
+            <div
+              style={{
+                background: '#F0FAFA',
+                border: '1px solid rgba(46,139,139,0.12)',
+                borderRadius: 24,
+                padding: '1.5rem',
+                boxShadow: 'var(--shadow-lg)',
+              }}
+            >
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.75rem' }}>
+                <strong>Today&apos;s habits</strong>
+                <span style={{ fontSize: '0.8125rem', color: 'var(--text-muted)' }}>3 / 5</span>
+              </div>
+              <div className="progress-track" style={{ height: 6, marginBottom: '1.25rem', background: 'rgba(46,139,139,0.15)' }}>
+                <div className="progress-fill" style={{ width: '60%', background: brand }} />
+              </div>
+              {habits.map((h) => (
+                <div
+                  key={h.label}
+                  style={{
+                    display: 'flex',
+                    alignItems: 'center',
+                    gap: '0.75rem',
+                    background: 'white',
+                    borderRadius: 14,
+                    padding: '0.8rem 1rem',
+                    marginBottom: '0.625rem',
+                    opacity: h.done ? 1 : 0.7,
+                    boxShadow: 'var(--shadow-sm)',
+                  }}
+                >
+                  {h.done ? <CheckCircle2 size={20} color={brand} /> : <Circle size={20} color="var(--border-strong)" />}
+                  <span style={{ fontSize: '0.9rem', color: 'var(--text-primary)', fontWeight: 500 }}>{h.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <div>
+              <Eyebrow>Habits &amp; gamification</Eyebrow>
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 800, lineHeight: 1.15, marginBottom: '1rem' }}>
+                Small daily wins, tracked and rewarded
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', lineHeight: 1.65, marginBottom: '1.75rem', maxWidth: 460 }}>
+                Preventive health is a routine, not a search query. Check in every day, watch your weekly progress grow, and collect XP, badges, levels and certificates as you go.
+              </p>
+              <div style={{ display: 'flex', gap: '0.625rem', flexWrap: 'wrap' }}>
+                {[
+                  { icon: Flame, label: '12-day streak' },
+                  { icon: Trophy, label: 'Level 4 learner' },
+                  { icon: Award, label: 'Nutrition badge' },
+                ].map((b) => (
+                  <span
+                    key={b.label}
+                    style={{
+                      display: 'inline-flex',
+                      alignItems: 'center',
+                      gap: '0.4rem',
+                      background: 'rgba(46,139,139,0.1)',
+                      color: brand,
+                      fontWeight: 600,
+                      fontSize: '0.8125rem',
+                      padding: '0.45rem 0.9rem',
+                      borderRadius: 999,
+                    }}
+                  >
+                    <b.icon size={14} /> {b.label}
+                  </span>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== TESTIMONIALS ===================== */}
+        <section style={{ padding: '6rem 0' }}>
+          <div className="container">
+            <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.5rem)', fontWeight: 800, lineHeight: 1.15, marginBottom: '3rem', maxWidth: 520 }}>
+              Learners who stopped guessing about their health
+            </h2>
+            <div className="grid-3">
+              {testimonials.map((t) => (
+                <div key={t.name} className="card" style={{ padding: '1.75rem', borderRadius: 20, display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                  <p style={{ color: 'var(--text-secondary)', lineHeight: 1.7, fontSize: '0.9375rem', flex: 1 }}>{t.quote}</p>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+                    <div style={{ width: 40, height: 40, borderRadius: 999, background: 'rgba(46,139,139,0.12)', color: brand, display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 700 }}>
+                      {t.initial}
+                    </div>
+                    <div>
+                      <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{t.name}</div>
+                      <div style={{ fontSize: '0.78rem', color: 'var(--text-muted)' }}>{t.role}</div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* ===================== CTA ===================== */}
+        <section style={{ padding: '0 0 6rem' }}>
+          <div className="container">
+            <div
+              style={{
+                background: 'linear-gradient(135deg, #CDEDE9, #E3F5F2)',
+                border: '1px solid rgba(46,139,139,0.15)',
+                borderRadius: 28,
+                padding: '4rem 2rem',
+                textAlign: 'center',
+              }}
+            >
+              <h2 style={{ fontSize: 'clamp(1.75rem, 3.5vw, 2.25rem)', fontWeight: 800, marginBottom: '0.75rem' }}>
+                Start your health literacy journey today
+              </h2>
+              <p style={{ color: 'var(--text-secondary)', marginBottom: '2rem' }}>
+                Free to start. No diagnosis, no fear-mongering — just clear, trusted education.
+              </p>
+              <Link
+                href="/auth/register"
+                style={{
+                  display: 'inline-flex',
+                  background: brand,
+                  color: 'white',
+                  fontWeight: 600,
+                  textDecoration: 'none',
+                  padding: '0.9rem 2rem',
+                  borderRadius: 999,
+                  boxShadow: '0 10px 26px rgba(46,139,139,0.35)',
+                }}
+              >
+                Create free account
+              </Link>
+            </div>
+          </div>
+        </section>
+      </main>
+
+      {/* ===================== FOOTER ===================== */}
+      <footer style={{ borderTop: '1px solid var(--border-subtle)', padding: '3.5rem 0 2rem', background: 'var(--bg-surface)' }}>
+        <div className="container">
+          <div className="footer-grid" style={{ display: 'grid', gridTemplateColumns: '2fr repeat(3, 1fr)', gap: '2.5rem', marginBottom: '2.5rem' }}>
+            <div>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', marginBottom: '1rem' }}>
+                <div style={{ width: 32, height: 32, borderRadius: 10, background: brand, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                  <Heart size={16} color="white" fill="white" />
+                </div>
+                <strong style={{ fontFamily: "'Plus Jakarta Sans', sans-serif" }}>HealthEdu AI</strong>
+              </div>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', maxWidth: 300, lineHeight: 1.6 }}>
+                An AI-powered health education ecosystem. Educational content only — always consult a licensed professional for medical advice.
+              </p>
+            </div>
+            {[
+              { title: 'Learn', links: ['Nutrition', 'Exercise', 'Sleep', 'Mental Health'] },
+              { title: 'Platform', links: ['AI Assistant', 'Quizzes', 'Habit Tracker', 'Certificates'] },
+              { title: 'Company', links: ['About', 'Sources & Method', 'Privacy', 'Contact'] },
+            ].map((col) => (
+              <div key={col.title}>
+                <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '1rem' }}>{col.title}</h4>
+                <ul style={{ listStyle: 'none', display: 'grid', gap: '0.6rem' }}>
+                  {col.links.map((l) => (
+                    <li key={l}>
+                      <a href="#" style={{ color: 'var(--text-muted)', fontSize: '0.875rem', textDecoration: 'none' }}>
+                        {l}
+                      </a>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            ))}
+          </div>
+          <div style={{ borderTop: '1px solid var(--border-subtle)', paddingTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.8125rem' }}>
+            © {new Date().getFullYear()} HealthEdu AI. Health education, not diagnosis.
+          </div>
+        </div>
+      </footer>
+    </div>
+  )
+}
+
+function TopicTile({ name, meta }: { name: string; meta: string }) {
+  return (
+    <div
+      className="card card-interactive"
+      style={{
+        display: 'flex',
+        alignItems: 'center',
+        gap: '0.875rem',
+        padding: '1rem 1.25rem',
+        borderRadius: 16,
+      }}
+    >
+      <div
+        style={{
+          width: 38,
+          height: 38,
+          borderRadius: 12,
+          background: 'rgba(46,139,139,0.1)',
+          color: brand,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexShrink: 0,
+        }}
+      >
+        <BookOpen size={17} />
+      </div>
+      <div>
+        <div style={{ fontWeight: 700, fontSize: '0.9rem' }}>{name}</div>
+        <div style={{ fontSize: '0.75rem', color: 'var(--text-muted)' }}>{meta}</div>
+      </div>
+    </div>
+  )
+}
+
