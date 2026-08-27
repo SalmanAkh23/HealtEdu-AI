@@ -20,6 +20,7 @@ import {
   Apple,
 } from 'lucide-react'
 import { ForceLightTheme } from '@/components/providers/ForceLightTheme'
+import BrandLogo from '@/components/layout/BrandLogo'
 
 const brand = '#2FA394'
 const cyan = '#45BCDF'
@@ -167,6 +168,24 @@ const testimonials = [
   },
 ]
 
+const healthPrinciples = [
+  {
+    source: 'WHO',
+    title: 'Kesehatan itu menyeluruh',
+    text: 'Kesehatan mencakup kesejahteraan fisik, mental, dan sosial, bukan sekadar tidak adanya penyakit.',
+  },
+  {
+    source: 'CDC',
+    title: 'Pencegahan dimulai dari informasi',
+    text: 'Memahami faktor risiko, kebiasaan sehari-hari, dan kapan mencari bantuan membantu kita mengambil keputusan yang lebih baik.',
+  },
+  {
+    source: 'Kemenkes RI',
+    title: 'Pilih sumber yang tepercaya',
+    text: 'Informasi kesehatan perlu berasal dari sumber resmi dan tenaga kesehatan yang kompeten, lalu disesuaikan dengan kondisi setiap orang.',
+  },
+]
+
 export default function LandingPage() {
   return (
     <div style={{ minHeight: '100dvh', display: 'flex', flexDirection: 'column', background: '#F8FCFC' }}>
@@ -192,20 +211,7 @@ export default function LandingPage() {
           }}
         >
           <Link href="/" style={{ display: 'flex', alignItems: 'center', gap: '0.625rem', textDecoration: 'none' }}>
-            <div
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: '11px',
-                background: brand,
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                boxShadow: `0 6px 16px rgba(46,139,139,0.3)`,
-              }}
-            >
-              <Heart size={18} color="white" fill="white" />
-            </div>
+            <BrandLogo size="compact" priority />
             <span style={{ fontFamily: "'Plus Jakarta Sans', sans-serif", fontWeight: 800, fontSize: '1.125rem', color: 'var(--text-primary)' }}>
               HealthEdu<span style={{ color: brand }}> AI</span>
             </span>
@@ -216,10 +222,10 @@ export default function LandingPage() {
             style={{ display: 'flex', gap: '0.5rem', alignItems: 'center' }}
           >
             {[
-              { href: '#features', label: 'Features' },
-              { href: '#learning', label: 'Learning' },
-              { href: '#assistant', label: 'AI Assistant' },
-              { href: '#habits', label: 'Habits' },
+              { href: '#health-principles', label: 'Pengertian kesehatan' },
+              { href: '#features', label: 'Fitur' },
+              { href: '#learning', label: 'Materi belajar' },
+              { href: '#assistant', label: 'Tanya AI' },
             ].map((l) => (
               <a
                 key={l.href}
@@ -291,7 +297,7 @@ export default function LandingPage() {
                 }}
               >
                 <Sparkles size={15} />
-                AI-powered health education
+                Edukasi kesehatan berbasis sumber tepercaya
               </div>
 
               <h1
@@ -303,8 +309,8 @@ export default function LandingPage() {
                   marginBottom: '1.5rem',
                 }}
               >
-                Understand health,{' '}
-                <span style={{ color: cyan }}>not just read about it.</span>
+                Pahami kesehatan dari{' '}
+                <span style={{ color: cyan }}>sudut pandang profesional.</span>
               </h1>
 
               <p
@@ -316,7 +322,7 @@ export default function LandingPage() {
                   marginBottom: '2rem',
                 }}
               >
-                HealthEdu AI simplifies medical language, explains trusted articles in seconds, and keeps you learning with quizzes, habits and streaks — so misinformation never gets the last word.
+                Pelajari dasar kesehatan dengan bahasa sederhana, berdasarkan prinsip dari organisasi kesehatan dan tenaga medis profesional. HealthEdu AI membantu edukasi, bukan mendiagnosis.
               </p>
 
               <div style={{ display: 'flex', gap: '0.875rem', flexWrap: 'wrap', marginBottom: '3rem' }}>
@@ -336,10 +342,10 @@ export default function LandingPage() {
                     boxShadow: '0 10px 26px rgba(46,139,139,0.35)',
                   }}
                 >
-                  Start learning free
+                  Mulai belajar gratis
                 </Link>
                 <Link
-                  href="/ai-assistant"
+                  href="/auth/login?redirectTo=%2Fai-assistant"
                   className="btn"
                   style={{
                     background: 'white',
@@ -348,16 +354,16 @@ export default function LandingPage() {
                     borderRadius: 999,
                   }}
                 >
-                  Ask the AI assistant
+                  Tanya AI (login diperlukan)
                 </Link>
               </div>
 
               {/* Stats */}
               <div style={{ display: 'flex', gap: '2.5rem', flexWrap: 'wrap' }}>
                 {[
-                  { value: '500+', label: 'Evidence-based articles' },
-                  { value: '100%', label: 'Education, never diagnosis' },
-                  { value: '10 min', label: 'Daily learning stress' },
+                  { value: 'WHO', label: 'Prinsip kesehatan menyeluruh' },
+                  { value: '100%', label: 'Edukasi, bukan diagnosis' },
+                  { value: '24/7', label: 'Materi belajar yang mudah dipahami' },
                 ].map((s) => (
                   <div key={s.label}>
                     <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--text-primary)' }}>{s.value}</div>
@@ -447,17 +453,42 @@ export default function LandingPage() {
           </div>
         </section>
 
+        {/* ===================== HEALTH PRINCIPLES ===================== */}
+        <section id="health-principles" style={{ padding: '6rem 0', background: 'var(--bg-surface)', borderBottom: '1px solid var(--border-subtle)' }}>
+          <div className="container">
+            <SectionHeading
+              eyebrow="Dasar kesehatan"
+              title="Apa arti sehat menurut para ahli?"
+              subtitle="Kesehatan dipahami sebagai keseimbangan yang perlu dirawat secara menyeluruh. Gunakan informasi ini sebagai langkah awal untuk belajar dan berdiskusi dengan tenaga kesehatan."
+            />
+            <div className="grid-3">
+              {healthPrinciples.map((principle) => (
+                <article key={principle.source} className="card" style={{ padding: '1.75rem', borderRadius: 20 }}>
+                  <div style={{ color: brand, fontSize: '0.8rem', fontWeight: 800, letterSpacing: '0.08em', textTransform: 'uppercase', marginBottom: '1rem' }}>
+                    {principle.source}
+                  </div>
+                  <h3 style={{ fontSize: '1.1rem', marginBottom: '0.6rem' }}>{principle.title}</h3>
+                  <p style={{ color: 'var(--text-secondary)', fontSize: '0.9rem', lineHeight: 1.65 }}>{principle.text}</p>
+                </article>
+              ))}
+            </div>
+            <p style={{ marginTop: '1.5rem', color: 'var(--text-muted)', fontSize: '0.8rem' }}>
+              Sumber rujukan: WHO Constitution, Centers for Disease Control and Prevention, dan Kementerian Kesehatan Republik Indonesia. Materi ini bersifat edukatif.
+            </p>
+          </div>
+        </section>
+
         {/* ===================== FEATURES ===================== */}
         <section id="features" style={{ padding: '6rem 0' }}>
           <div className="container">
             <SectionHeading
-              eyebrow="Core features"
+              eyebrow="Fitur pembelajaran"
               title={
                 <>
-                  Everything you need to actually learn health
+                  Belajar kesehatan dengan cara yang lebih jelas
                 </>
               }
-              subtitle="Built around education, not diagnosis — combining AI, visual learning and gamification."
+              subtitle="Dibangun untuk edukasi, bukan diagnosis, dengan AI, materi visual, kuis, dan kebiasaan sehat."
             />
             <div className="grid-4">
               {features.map((f) => (
@@ -501,10 +532,10 @@ export default function LandingPage() {
                 eyebrow="AI assistant"
                 title={
                   <>
-                    Your patient, always-available health tutor
+                    Tutor kesehatan yang siap membantu menjelaskan
                   </>
                 }
-                subtitle="Ask anything about healthy living. HealthEdu AI answers in plain language, links to scientific references and suggests what to learn next. It will never diagnose diseases or prescribe medication."
+                subtitle="Ajukan pertanyaan edukatif tentang kesehatan. HealthEdu AI menjawab dengan bahasa sederhana dan tidak akan mendiagnosis penyakit atau meresepkan obat. Untuk mengajukan pertanyaan, silakan login terlebih dahulu."
               />
               <ul style={{ listStyle: 'none', display: 'grid', gap: '0.75rem' }}>
                 {['Simplify', 'Translate terms', 'Summarize', 'Recommend articles'].map((item) => (
@@ -588,6 +619,14 @@ export default function LandingPage() {
                   <Send size={14} />
                 </div>
               </div>
+
+              <Link
+                href="/auth/login?redirectTo=%2Fai-assistant"
+                className="btn btn-primary"
+                style={{ width: '100%', marginTop: '0.75rem', borderRadius: 999 }}
+              >
+                <Bot size={17} /> Login untuk bertanya ke AI
+              </Link>
             </div>
           </div>
         </section>
@@ -818,17 +857,41 @@ export default function LandingPage() {
               </p>
             </div>
             {[
-              { title: 'Learn', links: ['Nutrition', 'Exercise', 'Sleep', 'Mental Health'] },
-              { title: 'Platform', links: ['AI Assistant', 'Quizzes', 'Habit Tracker', 'Certificates'] },
-              { title: 'Company', links: ['About', 'Sources & Method', 'Privacy', 'Contact'] },
+              {
+                title: 'Learn',
+                links: [
+                  { label: 'Nutrition', href: '/learn' },
+                  { label: 'Exercise', href: '/learn' },
+                  { label: 'Sleep', href: '/learn' },
+                  { label: 'Mental Health', href: '/learn' },
+                ],
+              },
+              {
+                title: 'Platform',
+                links: [
+                  { label: 'AI Assistant', href: '/auth/login?redirectTo=%2Fai-assistant' },
+                  { label: 'Quizzes', href: '/learn' },
+                  { label: 'Habit Tracker', href: '/habits' },
+                  { label: 'Certificates', href: '/dashboard' },
+                ],
+              },
+              {
+                title: 'Company',
+                links: [
+                  { label: 'About', href: '#health-principles' },
+                  { label: 'Sources & Method', href: '#health-principles' },
+                  { label: 'Privacy', href: 'mailto:healtheduai@example.com?subject=Privacy%20question' },
+                  { label: 'Contact', href: 'mailto:healtheduai@example.com' },
+                ],
+              },
             ].map((col) => (
               <div key={col.title}>
                 <h4 style={{ fontSize: '0.875rem', fontWeight: 700, marginBottom: '1rem' }}>{col.title}</h4>
                 <ul style={{ listStyle: 'none', display: 'grid', gap: '0.6rem' }}>
-                  {col.links.map((l) => (
-                    <li key={l}>
-                      <a href="#" style={{ color: 'var(--text-muted)', fontSize: '0.875rem', textDecoration: 'none' }}>
-                        {l}
+                  {col.links.map((link) => (
+                    <li key={link.label}>
+                      <a href={link.href} style={{ color: 'var(--text-muted)', fontSize: '0.875rem', textDecoration: 'none' }}>
+                        {link.label}
                       </a>
                     </li>
                   ))}

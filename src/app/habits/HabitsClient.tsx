@@ -3,7 +3,7 @@
 import { useState } from 'react'
 import AppShell from '@/components/layout/AppShell'
 import { createClient } from '@/lib/supabase/client'
-import { Check, Calendar as CalendarIcon, Info } from 'lucide-react'
+import { Check, Calendar as CalendarIcon, Info, Loader2, CheckCircle2 } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 import type { Habit, HabitProgress } from '@/types/database'
 
@@ -16,9 +16,11 @@ interface HabitsClientProps {
 export default function HabitsClient({ user, habits, recentLogs }: HabitsClientProps) {
   const router = useRouter()
   const [loading, setLoading] = useState(false)
+  const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
   
-  // Format today's date for comparison (YYYY-MM-DD)
-  const today = new Date().toISOString().split('T')[0]
+  const now = new Date()
+  const today = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`
 
   // Check if a habit is completed today
   const isCompletedToday = (habitId: string) => {
@@ -30,26 +32,46 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
   const handleToggleHabit = async (habitId: string) => {
     if (loading) return
     setLoading(true)
+    setError(null)
+    setSuccess(null)
     
     const completed = isCompletedToday(habitId)
     const supabase = createClient()
 
     const habitTable = supabase.from('habit_progress')
 
-    if (completed) {
-      // Un-complete
-      await habitTable
+    const result = completed
+      ? await habitTable
         .delete()
         .match({ user_id: user.id, habit_id: habitId, date: today })
-    } else {
-      // Complete
-      await habitTable
+      : await habitTable
         .insert({ user_id: user.id, habit_id: habitId, date: today, completed: true })
+
+    if (result.error) {
+      setError('Habit belum dapat diperbarui. Silakan coba lagi.')
+      setLoading(false)
+      return
     }
 
     setLoading(false)
+    setSuccess(completed ? 'Catatan habit dibatalkan.' : 'Terima kasih sudah mengisi habit hari ini! Data kamu sudah tersimpan.')
     router.refresh()
   }
+
+  const dateKey = (date: Date) => `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, '0')}-${String(date.getDate()).padStart(2, '0')}`
+  const todayDate = new Date()
+  const weekStart = new Date(todayDate)
+  const day = weekStart.getDay()
+  weekStart.setDate(weekStart.getDate() - (day === 0 ? 6 : day - 1))
+  const monthStart = new Date(todayDate.getFullYear(), todayDate.getMonth(), 1)
+  const yearStart = new Date(todayDate.getFullYear(), 0, 1)
+  const countFrom = (start: Date) => recentLogs.filter((log) => log.date >= dateKey(start) && log.date <= today).length
+  const daysBetween = (start: Date) => Math.floor((todayDate.getTime() - start.getTime()) / 86400000) + 1
+  const summaries = [
+    { label: 'Minggu ini', completed: countFrom(weekStart), target: habits.length * daysBetween(weekStart) },
+    { label: 'Bulan ini', completed: countFrom(monthStart), target: habits.length * daysBetween(monthStart) },
+    { label: 'Tahun ini', completed: countFrom(yearStart), target: habits.length * daysBetween(yearStart) },
+  ].map((summary) => ({ ...summary, percentage: summary.target ? Math.round((summary.completed / summary.target) * 100) : 0 }))
 
   return (
     <AppShell title="Habit Tracker">
@@ -62,6 +84,32 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
             Build consistency and earn XP by completing your daily health goals.
           </p>
         </div>
+
+        {error && (
+          <p role="alert" style={{ color: 'var(--danger-500)', marginBottom: '1rem' }}>
+            {error}
+          </p>
+        )}
+
+        {success && (
+          <div role="status" style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', padding: '0.875rem 1rem', marginBottom: '1rem', borderRadius: 12, background: 'hsla(145, 63%, 42%, 0.12)', color: 'var(--brand-600)' }}>
+            <CheckCircle2 size={18} />
+            <span>{success}</span>
+          </div>
+        )}
+
+        <section aria-label="Ringkasan habit" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+          {summaries.map((summary) => (
+            <div key={summary.label} className="card" style={{ padding: '1.25rem' }}>
+              <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>{summary.label}</p>
+              <strong style={{ fontSize: '1.5rem' }}>{summary.percentage}%</strong>
+              <p style={{ color: 'var(--text-muted)', fontSize: '0.8rem', marginTop: '0.35rem' }}>{summary.completed} dari {summary.target} target</p>
+              <div style={{ height: 6, borderRadius: 99, background: 'var(--bg-default)', marginTop: '0.75rem', overflow: 'hidden' }}>
+                <div style={{ height: '100%', width: `${Math.min(summary.percentage, 100)}%`, background: 'var(--brand-500)', borderRadius: 99 }} />
+              </div>
+            </div>
+          ))}
+        </section>
 
         <div className="grid-auto">
           {habits.map((habit) => {
@@ -107,7 +155,7 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
                   }}
                   aria-label={completed ? `Unmark ${habit.name}` : `Mark ${habit.name} complete`}
                 >
-                  {completed && <Check size={24} />}
+                  {loading ? <Loader2 size={20} className="animate-spin" /> : completed ? <Check size={24} /> : null}
                 </button>
               </div>
             )

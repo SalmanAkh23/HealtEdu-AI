@@ -1,0 +1,120 @@
+<svg width="1200" height="1200" viewBox="0 0 1200 1200" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bgOuter" x1="150" y1="120" x2="1040" y2="1040" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#6FD8D3"/>
+      <stop offset="1" stop-color="#1DA8A5"/>
+    </linearGradient>
+    <linearGradient id="bookBlue" x1="300" y1="520" x2="780" y2="900" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A8EC6"/>
+      <stop offset="0.45" stop-color="#19B7D1"/>
+      <stop offset="1" stop-color="#23D1C7"/>
+    </linearGradient>
+    <linearGradient id="bookLight" x1="320" y1="600" x2="760" y2="1000" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#DDFCF8"/>
+      <stop offset="1" stop-color="#C8F3F0"/>
+    </linearGradient>
+    <linearGradient id="caduceus" x1="560" y1="240" x2="714" y2="720" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D7DB8"/>
+      <stop offset="0.5" stop-color="#11A9CF"/>
+      <stop offset="1" stop-color="#19D3C9"/>
+    </linearGradient>
+    <linearGradient id="caduceus2" x1="514" y1="250" x2="630" y2="700" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#0D7FB7"/>
+      <stop offset="0.55" stop-color="#17A7BE"/>
+      <stop offset="1" stop-color="#25D2B6"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="18" stdDeviation="18" flood-color="#0E6B78" flood-opacity="0.18"/>
+    </filter>
+  </defs>
+
+  <rect width="1200" height="1200" fill="#F5F7F7"/>
+
+  <g filter="url(#shadow)">
+    <circle cx="600" cy="600" r="520" fill="#F6F9F8" stroke="url(#bgOuter)" stroke-width="22"/>
+  </g>
+
+  <g opacity="0.8" stroke="#A8ECF0" stroke-width="3">
+    <circle cx="470" cy="480" r="90" fill="none"/>
+    <circle cx="755" cy="520" r="92" fill="none"/>
+    <circle cx="835" cy="710" r="74" fill="none"/>
+    <circle cx="365" cy="710" r="72" fill="none"/>
+    <path d="M470 390L525 515L575 610M755 430L678 505L600 610M835 635L742 612L600 610M365 635L459 610L600 610"/>
+  </g>
+
+  <g opacity="0.9">
+    <circle cx="470" cy="480" r="10" fill="#19B7D1"/>
+    <circle cx="755" cy="520" r="10" fill="#2CD1B3"/>
+    <circle cx="835" cy="710" r="10" fill="#19B7D1"/>
+    <circle cx="365" cy="710" r="10" fill="#2CD1B3"/>
+    <circle cx="600" cy="610" r="10" fill="#39C4C0"/>
+  </g>
+
+  <g>
+    <path d="M295 816C335 764 400 726 489 700L587 668L687 700C778 725 844 764 882 816L937 890L692 945L580 990L466 944L225 889L295 816Z" fill="url(#bookBlue)"/>
+    <path d="M291 810C350 760 419 720 508 693L582 668L667 695C755 721 825 760 878 810L728 869L589 918L452 870L291 810Z" fill="url(#bookLight)" opacity="0.72"/>
+    <path d="M584 670L699 714C784 744 847 785 885 846L778 901L594 948L430 905L365 852C446 783 507 729 584 670Z" fill="url(#bookBlue)"/>
+    <path d="M295 816C335 764 400 726 489 700L580 668V992L466 944L225 889L295 816Z" fill="#1FA9D0" opacity="0.9"/>
+    <path d="M580 668L691 700C780 726 846 764 883 816L1079 873L1021 946L752 1017L580 992V668Z" fill="#14B2C5" opacity="0.95"/>
+    <path d="M417 812L520 778L582 675L643 777L748 812L594 890L417 812Z" fill="#B6F3EE" opacity="0.8"/>
+  </g>
+
+  <g filter="url(#shadow)">
+    <path d="M620 270C620 244 641 224 667 224H704C743 224 774 255 774 294V350C774 389 743 420 704 420H677C642 420 613 390 613 355V300C613 286 603 274 589 274H564C550 274 542 286 542 300V512C542 604 583 674 626 724C670 774 716 805 785 836L859 868L882 932L786 903C702 873 645 840 592 782C531 715 488 639 474 530V300C474 264 502 234 538 234H566C584 234 600 245 607 260L620 270Z" fill="url(#caduceus)"/>
+    <path d="M593 274C602 270 612 264 624 260C643 254 667 257 691 270C719 285 730 319 726 348C721 387 686 418 646 420C610 422 578 398 570 365C565 344 568 319 583 298C586 293 589 286 593 274Z" fill="#D4F9FF" opacity="0.18"/>
+    <path d="M655 246C669 246 680 257 680 271V309C680 323 669 334 655 334H624C610 334 599 323 599 309V271C599 257 610 246 624 246H655Z" fill="#E4F9F8" opacity="0.9"/>
+    <path d="M597 330C622 365 666 437 683 488C705 554 704 624 670 690C654 720 634 749 609 776C580 810 552 839 524 868L487 907C472 921 468 943 481 959C495 976 518 978 533 966L581 929C631 891 690 844 726 791C776 722 807 650 812 557C818 446 772 345 702 296C680 281 650 276 624 282L597 330Z" fill="url(#caduceus2)" opacity="0.85"/>
+  </g>
+
+  <g>
+    <path d="M560 280C529 280 503 306 503 337V374C503 405 529 431 560 431H597C629 431 654 405 654 374V337C654 306 629 280 597 280H560Z" fill="#F3FCFF"/>
+    <path d="M616 343C653 343 684 374 684 411V444C684 481 653 512 616 512H560C523 512 492 481 492 444V411C492 374 523 343 560 343H616Z" fill="#F3FCFF"/>
+    <path d="M575 332V414" stroke="#0D5F8A" stroke-width="10" stroke-linecap="round"/>
+    <path d="M575 332L640 452L611 503L573 438L538 414L575 332Z" fill="#0E88A4" opacity="0.25"/>
+    <circle cx="551" cy="325" r="9" fill="#0D5B9A"/>
+    <circle cx="632" cy="446" r="9" fill="#0D5B9A"/>
+  </g>
+
+  <g opacity="0.94">
+    <path d="M224 498C224 479 239 465 258 465H287C306 465 321 479 321 498V523C321 542 306 557 287 557H258C239 557 224 542 224 523V498Z" fill="#F7FBFD"/>
+    <path d="M242 574C242 561 253 551 266 551H302C315 551 326 561 326 574V592C326 605 315 616 302 616H266C253 616 242 605 242 592V574Z" fill="#0D7FB7" opacity="0.18"/>
+    <path d="M294 507L347 451" stroke="#27A0C5" stroke-width="8" stroke-linecap="round"/>
+    <path d="M343 447L383 475" stroke="#27A0C5" stroke-width="8" stroke-linecap="round"/>
+    <path d="M343 447L336 403" stroke="#27A0C5" stroke-width="8" stroke-linecap="round"/>
+    <circle cx="341" cy="447" r="6" fill="#2FC9D3"/>
+  </g>
+
+  <g>
+    <path d="M932 702C932 683 947 668 966 668H1004C1023 668 1038 683 1038 702V785C1038 804 1023 819 1004 819H966C947 819 932 804 932 785V702Z" fill="#F3FBFC"/>
+    <path d="M938 826L972 844L1008 826V844C1008 864 990 879 969 879H948C927 879 910 864 910 844V827L938 826Z" fill="#E3F4F7"/>
+    <path d="M957 690V768" stroke="#0B5A7B" stroke-width="8" stroke-linecap="round"/>
+    <path d="M920 735H993" stroke="#0B5A7B" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g opacity="0.9">
+    <path d="M823 650C870 628 901 590 914 545C924 511 922 475 903 441L857 483C878 512 882 553 846 578C816 599 775 604 730 589L706 563C761 607 792 628 823 650Z" fill="#D8F7F1" opacity="0.75"/>
+    <path d="M325 662C337 603 372 568 418 536C474 496 528 476 590 470L581 523C529 529 476 548 429 580C404 597 378 622 357 654L325 662Z" fill="#D6F9F4" opacity="0.7"/>
+  </g>
+
+  <g>
+    <path d="M816 860C783 879 732 897 697 908L666 919L643 853L666 845C699 835 741 824 786 800L816 860Z" fill="#14A8B3" opacity="0.35"/>
+    <path d="M420 867C450 885 506 903 547 914L578 922L594 865L570 857C536 845 491 832 447 806L420 867Z" fill="#14A8B3" opacity="0.32"/>
+  </g>
+
+  <g>
+    <circle cx="600" cy="1030" r="26" fill="#5BC0C7"/>
+    <path d="M600 1004V1056" stroke="#F3FBFC" stroke-width="8" stroke-linecap="round"/>
+    <path d="M574 1030H626" stroke="#F3FBFC" stroke-width="8" stroke-linecap="round"/>
+  </g>
+
+  <g>
+    <text x="600" y="702" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="158" fill="#153C6C">HealthEdu</text>
+    <text x="600" y="814" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="700" font-size="100" fill="#1AB7B5">Ai</text>
+    <text x="600" y="902" text-anchor="middle" font-family="Arial, Helvetica, sans-serif" font-weight="500" font-size="54" fill="#1A8BBB" letter-spacing="0.5">Smart Learning for Better Health</text>
+  </g>
+
+  <g>
+    <path d="M455 930H745" stroke="#1AB7B5" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+    <path d="M510 930C540 986 578 1014 600 1014C622 1014 660 986 690 930" stroke="#1AB7B5" stroke-width="8" stroke-linecap="round" opacity="0.7"/>
+  </g>
+</svg>

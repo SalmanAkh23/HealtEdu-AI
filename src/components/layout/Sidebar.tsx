@@ -8,8 +8,9 @@ import { useRouter } from 'next/navigation'
 import {
   LayoutDashboard, FileText,
   CheckSquare, User,
-  LogOut, Sun, Moon, X, Heart, GraduationCap, Bot
+  LogOut, Sun, Moon, X, GraduationCap, Bot
 } from 'lucide-react'
+import BrandLogo from './BrandLogo'
 
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
@@ -68,20 +69,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
                 textDecoration: 'none',
               }}
             >
-              <div
-                style={{
-                  width: 36,
-                  height: 36,
-                  borderRadius: '10px',
-                  background: 'linear-gradient(135deg, var(--brand-500), var(--accent-400))',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  boxShadow: 'var(--shadow-brand)',
-                }}
-              >
-                <Heart size={18} color="white" fill="white" />
-              </div>
+              <BrandLogo size="compact" />
               <span
                 style={{
                   fontFamily: '"Plus Jakarta Sans", sans-serif',

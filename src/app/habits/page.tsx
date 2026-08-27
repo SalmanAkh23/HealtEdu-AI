@@ -7,8 +7,9 @@ export const metadata = {
   description: 'Track your daily health habits and build consistency.',
 }
 
-function sevenDaysAgoISO() {
-  return new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString()
+function startOfYear() {
+  const date = new Date()
+  return `${date.getFullYear()}-01-01`
 }
 
 export default async function HabitsPage() {
@@ -24,7 +25,7 @@ export default async function HabitsPage() {
       .select('*')
       .eq('user_id', user.id)
       .eq('completed', true)
-      .gte('date', sevenDaysAgoISO()), // last 7 days
+      .gte('date', startOfYear()),
   ])
 
   return (

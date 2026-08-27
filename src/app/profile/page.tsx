@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { useEffect, useState } from "react";
 import {
   Award,
@@ -79,6 +80,7 @@ export default function ProfilePage() {
   const [isLoading, setIsLoading] = useState(true);
   const [isSaving, setIsSaving] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
+  const [feedback, setFeedback] = useState<{ type: "success" | "error"; message: string } | null>(null);
 
   const [form, setForm] = useState({
     full_name: "",
@@ -129,21 +131,23 @@ export default function ProfilePage() {
 
       if (userError) {
         console.error("Auth error:", userError);
+        setFeedback({ type: "error", message: "Sesi login tidak dapat diperiksa. Silakan login kembali." });
         return;
       }
 
       if (!user) {
-        console.log("User belum login");
+        setFeedback({ type: "error", message: "Sesi login tidak ditemukan. Silakan login kembali." });
         return;
       }
 
       setEmail(user.email ?? "");
 
-      const { data, error } = await supabase
+      const { data: initialData, error } = await supabase
         .from("profiles")
         .select("*")
         .eq("id", user.id)
         .maybeSingle();
+      let data = initialData;
 
       if (error) {
         console.error("Failed to load profile:", {
@@ -155,12 +159,25 @@ export default function ProfilePage() {
         return;
       }
 
+      if (!data) {
+        const { data: createdProfile, error: createError } = await supabase
+          .from("profiles")
+          .insert({ id: user.id, full_name: user.user_metadata?.full_name ?? "" })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error("Failed to create profile:", createError);
+          setFeedback({ type: "error", message: "Profile belum tersedia dan gagal dibuat." });
+          return;
+        }
+
+        data = createdProfile;
+      }
+
       const profileData = data as Profile | null;
 
-      if (!profileData) {
-        console.log("Profile belum ditemukan untuk user:", user.id);
-        return;
-      }
+      if (!profileData) return;
 
       setProfile(profileData);
 
@@ -216,9 +233,10 @@ export default function ProfilePage() {
 
       setProfile(data as Profile);
       setIsEditing(false);
+      setFeedback({ type: "success", message: "Terima kasih, perubahan profile kamu sudah tersimpan." });
     } catch (error) {
       console.error(error);
-      alert("Terjadi kesalahan saat memperbarui profil.");
+      setFeedback({ type: "error", message: "Terjadi kesalahan saat memperbarui profile." });
     } finally {
       setIsSaving(false);
     }
@@ -235,12 +253,12 @@ export default function ProfilePage() {
       if (!file) return;
 
       if (!file.type.startsWith("image/")) {
-        alert("File harus berupa gambar.");
+        setFeedback({ type: "error", message: "File harus berupa gambar." });
         return;
       }
 
       if (file.size > 2 * 1024 * 1024) {
-        alert("Ukuran gambar maksimal 2MB.");
+        setFeedback({ type: "error", message: "Ukuran gambar maksimal 2MB." });
         return;
       }
 
@@ -257,7 +275,7 @@ export default function ProfilePage() {
 
       if (uploadError) {
         console.error(uploadError);
-        alert(`Upload avatar gagal: ${uploadError.message}`);
+        setFeedback({ type: "error", message: `Upload foto gagal: ${uploadError.message}` });
         return;
       }
 
@@ -275,7 +293,7 @@ export default function ProfilePage() {
         .eq("id", profile.id);
       if (updateError) {
         console.error(updateError);
-        alert(`Gagal menyimpan avatar: ${updateError.message}`);
+        setFeedback({ type: "error", message: `Foto berhasil diupload tetapi gagal disimpan: ${updateError.message}` });
         return;
       }
 
@@ -287,9 +305,10 @@ export default function ProfilePage() {
             }
           : prev,
       );
+      setFeedback({ type: "success", message: "Terima kasih, foto profile kamu sudah tersimpan." });
     } catch (error) {
       console.error(error);
-      alert("Gagal mengupload avatar.");
+      setFeedback({ type: "error", message: "Gagal mengupload foto profile." });
     } finally {
       event.target.value = "";
     }
@@ -337,15 +356,34 @@ export default function ProfilePage() {
   return (
     <AppShell title="Profile">
       <div className="profile-page">
+        {feedback && (
+          <div
+            role={feedback.type === "error" ? "alert" : "status"}
+            style={{
+              marginBottom: "1rem",
+              padding: "0.875rem 1rem",
+              borderRadius: 12,
+              color: feedback.type === "error" ? "#b91c1c" : "#166534",
+              background: feedback.type === "error" ? "#fef2f2" : "#f0fdf4",
+              border: `1px solid ${feedback.type === "error" ? "#fecaca" : "#bbf7d0"}`,
+            }}
+          >
+            {feedback.message}
+          </div>
+        )}
+
         {/* Hero */}
         <section className="profile-hero">
           <div className="profile-hero-content">
             <div className="profile-avatar-wrapper">
               {profile.avatar_url ? (
-                <img
+                <Image
                   src={profile.avatar_url}
                   alt={profile.full_name || "Profile"}
                   className="profile-avatar"
+                  width={96}
+                  height={96}
+                  unoptimized
                 />
               ) : (
                 <div className="profile-avatar profile-avatar-placeholder">

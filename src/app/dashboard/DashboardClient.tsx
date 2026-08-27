@@ -5,15 +5,18 @@ import Link from 'next/link'
 import { Brain, FileText, Zap, ChevronRight, CheckSquare, Award } from 'lucide-react'
 import type { Article, LearningModule, Profile } from '@/types/database'
 import type { User } from '@supabase/auth-js'
+import Image from "next/image";
 
 interface DashboardClientProps {
   user: User
   profile: Profile | null
   recentArticles: Pick<Article, 'id' | 'title' | 'slug' | 'cover_image' | 'reading_time'>[]
   featuredModules: Pick<LearningModule, 'id' | 'title' | 'estimated_minutes'>[]
+  modulesCompleted: number
+  achievements: number
 }
 
-export default function DashboardClient({ user, profile, recentArticles, featuredModules }: DashboardClientProps) {
+export default function DashboardClient({ user, profile, recentArticles, featuredModules, modulesCompleted, achievements }: DashboardClientProps) {
   const userName = profile?.full_name || user.email?.split('@')[0] || 'Learner'
 
   return (
@@ -61,7 +64,7 @@ export default function DashboardClient({ user, profile, recentArticles, feature
             </div>
             <div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Modules Completed</p>
-              <p style={{ fontSize: '1.5rem', fontWeight: 800 }}>0</p>
+              <p style={{ fontSize: '1.5rem', fontWeight: 800 }}>{modulesCompleted}</p>
             </div>
           </div>
           <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
@@ -70,7 +73,7 @@ export default function DashboardClient({ user, profile, recentArticles, feature
             </div>
             <div>
               <p style={{ color: 'var(--text-muted)', fontSize: '0.875rem', fontWeight: 600, textTransform: 'uppercase', letterSpacing: '0.05em' }}>Achievements</p>
-              <p style={{ fontSize: '1.5rem', fontWeight: 800 }}>0</p>
+              <p style={{ fontSize: '1.5rem', fontWeight: 800 }}>{achievements}</p>
             </div>
           </div>
         </section>
@@ -111,7 +114,7 @@ export default function DashboardClient({ user, profile, recentArticles, feature
               {recentArticles.map((article) => (
                 <Link key={article.id} href={`/articles/${article.slug}`} className="card card-interactive" style={{ padding: '1rem', display: 'flex', gap: '1rem', textDecoration: 'none' }}>
                   {article.cover_image && (
-                    <img src={article.cover_image} alt={article.title} style={{ width: 80, height: 60, borderRadius: '8px', objectFit: 'cover' }} />
+                    <Image src={article.cover_image} alt={article.title} width={80} height={60} style={{ borderRadius: '8px', objectFit: 'cover' }} />
                   )}
                   <div style={{ flex: 1 }}>
                     <h3 className="line-clamp-2" style={{ fontSize: '0.9375rem', fontWeight: 600, color: 'var(--text-primary)', marginBottom: '0.25rem', lineHeight: 1.4 }}>

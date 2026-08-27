@@ -4,7 +4,8 @@ import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Heart, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+import BrandLogo from '@/components/layout/BrandLogo'
 
 export default function LoginPage() {
   const router = useRouter()
@@ -29,7 +30,8 @@ export default function LoginPage() {
       setError(authError.message)
       setLoading(false)
     } else {
-      router.push('/dashboard')
+      const redirectTo = new URLSearchParams(window.location.search).get('redirectTo')
+      router.push(redirectTo?.startsWith('/') ? redirectTo : '/dashboard')
     }
   }
 
@@ -53,20 +55,8 @@ export default function LoginPage() {
       <div style={{ width: '100%', maxWidth: 420, position: 'relative', zIndex: 1 }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, var(--brand-500), var(--accent-400))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              boxShadow: '0 12px 40px hsla(168,72%,40%,0.4)',
-            }}
-          >
-            <Heart size={28} color="white" fill="white" />
+          <div style={{ margin: '0 auto 1rem', display: 'flex', justifyContent: 'center' }}>
+            <BrandLogo size="full" priority />
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>
             Welcome back

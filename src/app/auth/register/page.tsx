@@ -4,7 +4,8 @@ import { useState, FormEvent } from 'react'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { createClient } from '@/lib/supabase/client'
-import { Heart, Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+import { Eye, EyeOff, AlertCircle, Loader2 } from 'lucide-react'
+import BrandLogo from '@/components/layout/BrandLogo'
 
 export default function RegisterPage() {
   const router = useRouter()
@@ -14,14 +15,16 @@ export default function RegisterPage() {
   const [showPassword, setShowPassword] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
+  const [success, setSuccess] = useState<string | null>(null)
 
   const handleRegister = async (e: FormEvent) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
+    setSuccess(null)
 
     const supabase = createClient()
-    const { error: authError } = await supabase.auth.signUp({
+    const { data, error: authError } = await supabase.auth.signUp({
       email,
       password,
       options: {
@@ -34,6 +37,9 @@ export default function RegisterPage() {
 
     if (authError) {
       setError(authError.message)
+      setLoading(false)
+    } else if (!data.session) {
+      setSuccess('Akun berhasil dibuat. Periksa email untuk mengonfirmasi akun sebelum login.')
       setLoading(false)
     } else {
       router.push('/dashboard')
@@ -60,20 +66,8 @@ export default function RegisterPage() {
       <div style={{ width: '100%', maxWidth: 420, position: 'relative', zIndex: 1 }}>
         {/* Logo */}
         <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <div
-            style={{
-              width: 56,
-              height: 56,
-              borderRadius: '16px',
-              background: 'linear-gradient(135deg, var(--brand-500), var(--accent-400))',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              margin: '0 auto 1rem',
-              boxShadow: '0 12px 40px hsla(168,72%,40%,0.4)',
-            }}
-          >
-            <Heart size={28} color="white" fill="white" />
+          <div style={{ margin: '0 auto 1rem', display: 'flex', justifyContent: 'center' }}>
+            <BrandLogo size="full" priority />
           </div>
           <h1 style={{ fontSize: '1.75rem', fontWeight: 800, color: 'white', marginBottom: '0.25rem' }}>
             Create an account
@@ -111,6 +105,12 @@ export default function RegisterPage() {
             >
               <AlertCircle size={18} />
               <span>{error}</span>
+            </div>
+          )}
+
+          {success && (
+            <div role="status" style={{ marginBottom: '1.25rem', color: 'hsl(150,70%,65%)', fontSize: '0.875rem' }}>
+              {success}
             </div>
           )}
 

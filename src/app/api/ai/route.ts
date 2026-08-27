@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { GoogleGenAI } from "@google/genai";
+import { createClient } from "@/lib/supabase/server";
 
 interface ClientMessage {
   role: "user" | "assistant";
@@ -51,6 +52,18 @@ HealthEdu AI is an educational platform, not a diagnosis or treatment service.
 
 export async function POST(request: NextRequest) {
   try {
+    const supabase = await createClient();
+    const {
+      data: { user },
+    } = await supabase.auth.getUser();
+
+    if (!user) {
+      return NextResponse.json(
+        { error: "Silakan login terlebih dahulu untuk menggunakan HealthEdu AI." },
+        { status: 401 },
+      );
+    }
+
     if (!apiKey) {
       return NextResponse.json(
         {

@@ -1,6 +1,6 @@
 'use client'
 
-import { Menu, Bell, } from 'lucide-react'
+import { Menu } from 'lucide-react'
 import Link from 'next/link'
 
 interface TopBarProps {

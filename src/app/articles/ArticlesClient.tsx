@@ -4,6 +4,7 @@ import { useState } from 'react'
 import AppShell from '@/components/layout/AppShell'
 import Link from 'next/link'
 import { Search, Clock, BookOpen,  } from 'lucide-react'
+import Image from 'next/image'
 import type { Article, Category } from '@/types/database'
 
 interface ArticlesClientProps {
@@ -127,11 +128,13 @@ export default function ArticlesClient({ articles, categories }: ArticlesClientP
                   style={{ display: 'block', textDecoration: 'none', overflow: 'hidden' }}
                 >
                   {article.cover_image && (
-                    <img
+                    <Image
                       src={article.cover_image}
-                      alt={article.title}
+                      alt=""
+                      width={640}
+                      height={320}
                       style={{ width: '100%', height: 160, objectFit: 'cover' }}
-                      loading="lazy"
+                      unoptimized
                     />
                   )}
                   <div style={{ padding: '1.125rem' }}>
