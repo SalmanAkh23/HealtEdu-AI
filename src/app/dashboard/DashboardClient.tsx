@@ -25,6 +25,7 @@ export default function DashboardClient({ user, profile, recentArticles, feature
         
         {/* Welcome Banner */}
         <section
+          className="welcome-banner"
           style={{
             background: 'linear-gradient(135deg, hsla(168,72%,40%,0.15), hsla(198,95%,58%,0.15))',
             border: '1px solid hsla(168,72%,40%,0.2)',
@@ -48,8 +49,8 @@ export default function DashboardClient({ user, profile, recentArticles, feature
         </section>
 
         {/* Quick Stats Grid */}
-        <section className="grid-auto">
-          <div className="card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
+        <section className="grid-auto stats-grid">
+          <div className="card stat-card" style={{ padding: '1.5rem', display: 'flex', alignItems: 'center', gap: '1rem' }}>
             <div style={{ width: 48, height: 48, borderRadius: '12px', background: 'hsla(45,100%,50%,0.1)', color: 'hsl(45,100%,50%)', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
               <Zap size={24} />
             </div>
@@ -81,15 +82,15 @@ export default function DashboardClient({ user, profile, recentArticles, feature
         <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))', gap: '2rem' }}>
           {/* Featured Modules */}
           <section>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div className="page-section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Learning Path</h2>
-              <Link href="/learn" style={{ color: 'var(--brand-400)', fontSize: '0.875rem', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+              <Link href="/learn" className="page-section-link" style={{ color: 'var(--brand-400)', fontSize: '0.875rem', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
                 View all <ChevronRight size={16} />
               </Link>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {featuredModules.map((module) => (
-                <Link key={module.id} href={`/learn/${module.id}`} className="card card-interactive" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', textDecoration: 'none' }}>
+                <Link key={module.id} href={`/learn/${module.id}`} className="card card-interactive module-card" style={{ padding: '1.25rem', display: 'flex', gap: '1rem', textDecoration: 'none' }}>
                   <div style={{ width: 40, height: 40, borderRadius: '10px', background: 'var(--bg-default)', display: 'flex', alignItems: 'center', justifyContent: 'center', flexShrink: 0 }}>
                     <FileText size={20} color="var(--text-secondary)" />
                   </div>
@@ -104,15 +105,15 @@ export default function DashboardClient({ user, profile, recentArticles, feature
 
           {/* Recent Articles */}
           <section>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+            <div className="page-section-header" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
               <h2 style={{ fontSize: '1.25rem', fontWeight: 700 }}>Latest Articles</h2>
-              <Link href="/articles" style={{ color: 'var(--brand-400)', fontSize: '0.875rem', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
+              <Link href="/articles" className="page-section-link" style={{ color: 'var(--brand-400)', fontSize: '0.875rem', fontWeight: 600, display: 'flex', alignItems: 'center' }}>
                 Read more <ChevronRight size={16} />
               </Link>
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
               {recentArticles.map((article) => (
-                <Link key={article.id} href={`/articles/${article.slug}`} className="card card-interactive" style={{ padding: '1rem', display: 'flex', gap: '1rem', textDecoration: 'none' }}>
+                <Link key={article.id} href={`/articles/${article.slug}`} className="card card-interactive article-card" style={{ padding: '1rem', display: 'flex', gap: '1rem', textDecoration: 'none' }}>
                   {article.cover_image && (
                     <Image src={article.cover_image} alt={article.title} width={80} height={60} style={{ borderRadius: '8px', objectFit: 'cover' }} />
                   )}

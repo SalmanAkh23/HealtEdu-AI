@@ -43,18 +43,7 @@ export default function Sidebar({ open, onClose }: SidebarProps) {
   return (
     <>
       {/* Mobile overlay */}
-      {open && (
-        <div
-          className="lg:hidden"
-          style={{
-            position: 'fixed',
-            inset: 0,
-            background: 'hsla(220,30%,5%,0.5)',
-            zIndex: 49,
-          }}
-          onClick={onClose}
-        />
-      )}
+      {open && <div className="sidebar-overlay" onClick={onClose} />}
 
       <aside className={`sidebar ${open ? 'open' : ''}`}>
         {/* Logo */}

@@ -10,22 +10,20 @@ interface TopBarProps {
 
 export default function TopBar({ onMenuClick, title }: TopBarProps) {
   return (
-    <header
-      style={{
-        height: '64px',
-        background: 'var(--bg-surface)',
-        borderBottom: '1px solid var(--border-subtle)',
-        display: 'flex',
-        alignItems: 'center',
-        padding: '0 1.5rem',
-        gap: '1rem',
-        position: 'sticky',
-        top: 0,
-        zIndex: 40,
-      }}
-    >
+    <header className="topbar" style={{
+      height: '64px',
+      background: 'var(--bg-surface)',
+      borderBottom: '1px solid var(--border-subtle)',
+      display: 'flex',
+      alignItems: 'center',
+      padding: '0 1rem',
+      gap: '0.75rem',
+      position: 'sticky',
+      top: 0,
+      zIndex: 40,
+    }}>
       <button
-        className="btn btn-ghost btn-sm"
+        className="btn btn-ghost btn-sm topbar-menu-button"
         onClick={onMenuClick}
         style={{ padding: '0.5rem' }}
         aria-label="Toggle menu"
@@ -34,7 +32,7 @@ export default function TopBar({ onMenuClick, title }: TopBarProps) {
       </button>
 
       {title && (
-        <h1 style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
+        <h1 className="topbar-title" style={{ fontSize: '1.1rem', fontWeight: 700, color: 'var(--text-primary)', margin: 0 }}>
           {title}
         </h1>
       )}

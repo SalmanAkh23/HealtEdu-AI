@@ -22,7 +22,7 @@ export default function LearnClient({ modules }: LearnClientProps) {
           </p>
         </div>
 
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+        <div className="module-list" style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
           {modules.map((module, index) => {
             // For demo purposes, unlock first two
             const isLocked = index > 1 
@@ -30,7 +30,7 @@ export default function LearnClient({ modules }: LearnClientProps) {
             return (
               <div 
                 key={module.id} 
-                className="card"
+                className="card module-card"
                 style={{ 
                   padding: '1.5rem',
                   display: 'flex',
@@ -74,7 +74,7 @@ export default function LearnClient({ modules }: LearnClientProps) {
                     {module.description}
                   </p>
                   
-                  <div style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
+                  <div className="module-meta" style={{ display: 'flex', alignItems: 'center', gap: '1.5rem', fontSize: '0.875rem', color: 'var(--text-muted)' }}>
                     <span style={{ display: 'flex', alignItems: 'center', gap: '0.375rem' }}>
                       <Clock size={16} /> {module.estimated_minutes ?? '—'} min
                     </span>
@@ -87,14 +87,14 @@ export default function LearnClient({ modules }: LearnClientProps) {
                 {!isLocked ? (
                   <Link 
                     href={`/learn/${module.id}`}
-                    className="btn btn-primary"
+                    className="btn btn-primary module-action"
                     style={{ flexShrink: 0 }}
                   >
                     Start <ChevronRight size={18} />
                   </Link>
                 ) : (
                   <button 
-                    className="btn btn-outline" 
+                    className="btn btn-outline module-action" 
                     disabled 
                     style={{ flexShrink: 0 }}
                   >

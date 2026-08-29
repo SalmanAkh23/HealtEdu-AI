@@ -98,7 +98,7 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
           </div>
         )}
 
-        <section aria-label="Ringkasan habit" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
+        <section aria-label="Ringkasan habit" className="habit-summary-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '1rem', marginBottom: '2rem' }}>
           {summaries.map((summary) => (
             <div key={summary.label} className="card" style={{ padding: '1.25rem' }}>
               <p style={{ color: 'var(--text-secondary)', fontSize: '0.875rem', marginBottom: '0.5rem' }}>{summary.label}</p>
@@ -117,7 +117,7 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
             return (
               <div 
                 key={habit.id} 
-                className="card" 
+                className="card habit-card" 
                 style={{ 
                   padding: '1.5rem', 
                   display: 'flex', 
@@ -138,6 +138,7 @@ export default function HabitsClient({ user, habits, recentLogs }: HabitsClientP
                 </div>
                 
                 <button
+                  className="habit-action"
                   onClick={() => handleToggleHabit(habit.id)}
                   disabled={loading}
                   style={{
