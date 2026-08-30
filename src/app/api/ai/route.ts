@@ -12,7 +12,7 @@ interface AIRequestBody {
 }
 
 const apiKey = process.env.GEMINI_API_KEY;
-const MODEL_NAME = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
+const MODEL_NAME = process.env.GEMINI_MODEL ?? "gemini-3.6-flash";
 
 const SYSTEM_INSTRUCTION = `
 You are HealthEdu AI, an educational health assistant.
@@ -77,6 +77,13 @@ export async function POST(request: NextRequest) {
 
     const ai = new GoogleGenAI({
       apiKey: apiKey,
+    });
+
+    console.log("Gemini request start", {
+      model: MODEL_NAME,
+      messageCount: Array.isArray((await request.clone().json()).messages)
+        ? (await request.clone().json()).messages.length
+        : 0,
     });
 
     const body = (await request.json()) as Partial<AIRequestBody>;
@@ -147,7 +154,9 @@ export async function POST(request: NextRequest) {
     console.error("Gemini API error:", error);
 
     const message =
-      error instanceof Error ? error.message : "Terjadi kesalahan saat menghubungkan ke Gemini AI.";
+      error instanceof Error
+        ? error.message
+        : "Terjadi kesalahan saat menghubungkan ke Gemini AI.";
 
     return NextResponse.json(
       {

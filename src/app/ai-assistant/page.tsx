@@ -72,10 +72,14 @@ export default function AIAssistantPage() {
     } catch (error) {
       console.error(error);
 
+      const backendMessage =
+        error instanceof Error ? error.message : "Unknown error";
+
       const errorMsg: Message = {
         id: crypto.randomUUID(),
         role: "assistant",
         content:
+          backendMessage ||
           "Sorry, I could not connect to the AI assistant right now. Please check your Gemini API configuration and try again.",
       };
 
@@ -87,43 +91,14 @@ export default function AIAssistantPage() {
 
   return (
     <AppShell title="AI Assistant">
-      <div
-        className="ai-chat-shell"
-        style={{
-          maxWidth: 900,
-          margin: "0 auto",
-          height: "calc(100vh - 140px)",
-          minHeight: 480,
-          display: "flex",
-          flexDirection: "column",
-        }}
-      >
+      <div className="ai-chat-shell">
         {/* Chat Area */}
-        <div
-          className="ai-chat-panel"
-          style={{
-            flex: 1,
-            overflowY: "auto",
-            padding: "1.5rem",
-            background: "var(--bg-surface)",
-            border: "1px solid var(--border-subtle)",
-            borderRadius: "16px 16px 0 0",
-            display: "flex",
-            flexDirection: "column",
-            gap: "1.5rem",
-          }}
-        >
+        <div className="ai-chat-panel">
           {messages.map((msg) => (
             <div
               key={msg.id}
-              className="ai-chat-row"
-              style={{
-                display: "flex",
-                gap: "1rem",
-                alignSelf: msg.role === "user" ? "flex-end" : "flex-start",
-                maxWidth: "85%",
-                flexDirection: msg.role === "user" ? "row-reverse" : "row",
-              }}
+              className={`ai-chat-row ${msg.role === "user" ? "is-user" : "is-assistant"}`}
+              style={{ alignSelf: msg.role === "user" ? "flex-end" : "flex-start" }}
             >
               <div
                 style={{
@@ -151,28 +126,7 @@ export default function AIAssistantPage() {
                 )}
               </div>
 
-              <div
-                className="ai-chat-bubble"
-                style={{
-                  background:
-                    msg.role === "user"
-                      ? "var(--brand-500)"
-                      : "hsla(220,20%,15%,0.6)",
-                  color: msg.role === "user" ? "white" : "var(--text-primary)",
-                  padding: "1rem 1.25rem",
-                  borderRadius:
-                    msg.role === "user"
-                      ? "16px 4px 16px 16px"
-                      : "4px 16px 16px 16px",
-                  lineHeight: 1.6,
-                  fontSize: "0.9375rem",
-                  border:
-                    msg.role === "assistant"
-                      ? "1px solid var(--border-subtle)"
-                      : "none",
-                  whiteSpace: "pre-wrap",
-                }}
-              >
+              <div className={`ai-chat-bubble ${msg.role === "user" ? "is-user" : "is-assistant"}`}>
                 {msg.content}
               </div>
             </div>
@@ -228,19 +182,7 @@ export default function AIAssistantPage() {
         </div>
 
         {/* Input Area */}
-        <form
-          className="ai-chat-form"
-          onSubmit={handleSend}
-          style={{
-            padding: "1.25rem",
-            background: "hsla(220,25%,12%,1)",
-            border: "1px solid var(--border-subtle)",
-            borderTop: "none",
-            borderRadius: "0 0 16px 16px",
-            display: "flex",
-            gap: "0.75rem",
-          }}
-        >
+        <form className="ai-chat-form" onSubmit={handleSend}>
           <input
             type="text"
             className="form-input"
@@ -248,25 +190,12 @@ export default function AIAssistantPage() {
             value={input}
             onChange={(e) => setInput(e.target.value)}
             disabled={isLoading}
-            style={{
-              flex: 1,
-              background: "var(--bg-default)",
-            }}
           />
 
           <button
             type="submit"
             className="btn btn-primary"
             disabled={!input.trim() || isLoading}
-            style={{
-              width: 48,
-              height: 48,
-              padding: 0,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              borderRadius: "12px",
-            }}
           >
             {isLoading ? (
               <Loader2 size={20} className="animate-spin" />
