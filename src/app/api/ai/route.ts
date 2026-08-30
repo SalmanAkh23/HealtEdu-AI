@@ -12,6 +12,7 @@ interface AIRequestBody {
 }
 
 const apiKey = process.env.GEMINI_API_KEY;
+const MODEL_NAME = process.env.GEMINI_MODEL ?? "gemini-2.5-flash";
 
 const SYSTEM_INSTRUCTION = `
 You are HealthEdu AI, an educational health assistant.
@@ -67,7 +68,8 @@ export async function POST(request: NextRequest) {
     if (!apiKey) {
       return NextResponse.json(
         {
-          error: "GEMINI_API_KEY belum dikonfigurasi di .env.local.",
+          error:
+            "GEMINI_API_KEY belum dikonfigurasi di environment Vercel atau local. Tambahkan variable ini di Vercel Project Settings > Environment Variables.",
         },
         { status: 500 },
       );
@@ -118,7 +120,7 @@ export async function POST(request: NextRequest) {
     }));
 
     const response = await ai.models.generateContent({
-      model: "gemini-3.6-flash",
+      model: MODEL_NAME,
       contents,
       config: {
         systemInstruction: SYSTEM_INSTRUCTION,
@@ -144,9 +146,12 @@ export async function POST(request: NextRequest) {
   } catch (error) {
     console.error("Gemini API error:", error);
 
+    const message =
+      error instanceof Error ? error.message : "Terjadi kesalahan saat menghubungkan ke Gemini AI.";
+
     return NextResponse.json(
       {
-        error: "Terjadi kesalahan saat menghubungkan ke Gemini AI.",
+        error: message,
       },
       { status: 500 },
     );

@@ -673,6 +673,41 @@ h1, h2, h3, h4, h5, h6 {
     justify-content: center !important;
   }
 
+  .ai-chat-shell {
+    height: calc(100vh - 120px) !important;
+    min-height: 360px !important;
+  }
+
+  .ai-chat-panel {
+    padding: 1rem !important;
+    gap: 1rem !important;
+  }
+
+  .ai-chat-row {
+    max-width: 92% !important;
+    gap: 0.75rem !important;
+  }
+
+  .ai-chat-bubble {
+    font-size: 0.875rem !important;
+    padding: 0.9rem 1rem !important;
+  }
+
+  .ai-chat-form {
+    padding: 0.75rem !important;
+    gap: 0.5rem !important;
+    flex-direction: column !important;
+  }
+
+  .ai-chat-form input {
+    width: 100% !important;
+  }
+
+  .ai-chat-form button {
+    width: 100% !important;
+    height: 46px !important;
+  }
+
   .mobile-bottom-nav {
     position: fixed;
     left: 0;

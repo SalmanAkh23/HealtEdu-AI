@@ -88,16 +88,19 @@ export default function AIAssistantPage() {
   return (
     <AppShell title="AI Assistant">
       <div
+        className="ai-chat-shell"
         style={{
-          maxWidth: 800,
+          maxWidth: 900,
           margin: "0 auto",
           height: "calc(100vh - 140px)",
+          minHeight: 480,
           display: "flex",
           flexDirection: "column",
         }}
       >
         {/* Chat Area */}
         <div
+          className="ai-chat-panel"
           style={{
             flex: 1,
             overflowY: "auto",
@@ -113,6 +116,7 @@ export default function AIAssistantPage() {
           {messages.map((msg) => (
             <div
               key={msg.id}
+              className="ai-chat-row"
               style={{
                 display: "flex",
                 gap: "1rem",
@@ -148,6 +152,7 @@ export default function AIAssistantPage() {
               </div>
 
               <div
+                className="ai-chat-bubble"
                 style={{
                   background:
                     msg.role === "user"
@@ -224,6 +229,7 @@ export default function AIAssistantPage() {
 
         {/* Input Area */}
         <form
+          className="ai-chat-form"
           onSubmit={handleSend}
           style={{
             padding: "1.25rem",
